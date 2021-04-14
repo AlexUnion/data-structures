@@ -1,7 +1,4 @@
-interface ILink<T> {
-  data: T;
-  next: null | ILink<T>;
-}
+import { ILink } from "./interfaces";
 
 class Link<T> implements ILink<T> {
   data;
@@ -74,9 +71,4 @@ class LinkedList<T> {
   }
 }
 
-const list = new LinkedList<string>();
-list.append("this ");
-list.append("world");
-list.prepend("Hello ");
-
-console.log(list.toArray());
+export default LinkedList;
