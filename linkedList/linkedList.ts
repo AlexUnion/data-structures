@@ -48,6 +48,18 @@ class LinkedList<T> {
     this.tail = node;
   }
 
+  appendAfter(origin: T, data: T) {
+    const current = this.find(origin);
+
+    if (!current) {
+      throw new Error("This link is missing");
+    }
+
+    const next = current.next;
+    const node: ILink<T> = new Link(data, next);
+    current.next = node;
+  }
+
   prepend(data: T) {
     const node: ILink<T> = new Link<T>(data, this.head);
 
