@@ -42,6 +42,20 @@ class VocabularyTree {
       currNode = node;
     }
   }
+
+  has(word: string): boolean {
+    word = word.toLowerCase();
+    let currNode: INode = this.root;
+    for (let i = 0; i < word.length; i++) {
+      const currLetter = word[i];
+      let node = currNode.get(currLetter);
+      if (typeof node === "undefined") {
+        return false;
+      }
+      currNode = node;
+    }
+    return true;
+  }
 }
 
 export default VocabularyTree;
