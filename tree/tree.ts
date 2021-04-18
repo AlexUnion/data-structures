@@ -17,6 +17,10 @@ class TreeNode implements INode {
     return this.children.find((item) => item.key === key);
   }
 
+  getAll(): Array<INode> {
+    return this.children;
+  }
+
   isEmpty(): boolean {
     return Boolean(this.children.length === 0);
   }
@@ -24,12 +28,17 @@ class TreeNode implements INode {
 
 class VocabularyTree {
   private root: INode;
+  private isChanged: boolean;
+  private maxDepth: number;
 
   constructor() {
     this.root = new TreeNode("");
+    this.isChanged = false;
+    this.maxDepth = 0;
   }
 
   addWord(word: string): void {
+    this.isChanged = true;
     word = word.toLowerCase();
     let currNode: INode = this.root;
     for (let i = 0; i < word.length; i++) {
@@ -55,6 +64,23 @@ class VocabularyTree {
       currNode = node;
     }
     return true;
+  }
+
+  getDepth(): number {
+    if (this.isChanged) {
+      this.isChanged = false;
+      this.maxDepth = VocabularyTree.step(this.root, 0);
+    }
+    return this.maxDepth;
+  }
+
+  private static step(node: INode, n: number): number {
+    if (node.isEmpty()) {
+      return n;
+    }
+    return Math.max(
+      ...node.getAll().map((item) => VocabularyTree.step(item, n + 1))
+    );
   }
 }
 
