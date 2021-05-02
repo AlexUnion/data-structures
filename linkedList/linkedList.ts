@@ -34,7 +34,7 @@ class LinkedList<T> {
     return Boolean(this.find(data));
   }
 
-  append(data: T) {
+  append(data: T): void {
     const node: ILink<T> = new Link(data, null);
 
     if (this.tail) {
@@ -48,7 +48,7 @@ class LinkedList<T> {
     this.tail = node;
   }
 
-  appendAfter(origin: T, data: T) {
+  appendAfter(origin: T, data: T): void {
     const current = this.find(origin);
 
     if (!current) {
@@ -60,7 +60,7 @@ class LinkedList<T> {
     current.next = node;
   }
 
-  prepend(data: T) {
+  prepend(data: T): void {
     const node: ILink<T> = new Link<T>(data, this.head);
 
     this.head = node;
