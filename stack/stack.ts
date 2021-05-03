@@ -1,32 +1,39 @@
-import { IStack } from "./interfaces";
+import { IStack, IIterable } from "./interfaces";
 
 class Stack<T> implements IStack<T> {
-  private iterator: Array<T>;
+  private iterator: IIterable<T>;
+  private length: number;
 
-  constructor(iterable?: Array<T>) {
-    this.iterator = iterable ? [...iterable] : [];
+  constructor(...items: Array<T>) {
+    this.length = 0;
+    this.iterator = {} as IIterable<T>;
+    items.forEach((item) => {
+      this.push(item);
+    });
   }
 
   push(item: T): void {
-    this.iterator.push(item);
+    this.iterator[this.length++] = item;
   }
 
   pop(): T | null {
-    if (this.iterator.length) {
-      return this.iterator.pop() as T;
-    }
-    return null;
+    const { length } = this;
+    return length ? this.iterator[length - 1] : null;
   }
 
   peek(): T | null {
-    const length = this.iterator.length;
+    const { length } = this;
     if (length) {
-      return this.iterator[length - 1];
+      const item = this.iterator[length - 1];
+      delete this.iterator[--this.length];
+      return item;
     }
     return null;
   }
 
-  length(): number {
-    return this.iterator.length;
+  getLength(): number {
+    return this.length;
   }
 }
+
+export default Stack;
